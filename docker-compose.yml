@@ -1,0 +1,12 @@
+version: '3'
+services:
+  text-summarization:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 5080:5000
+    environment:
+      PYTHONUNBUFFERED: 1
+    volumes: 
+      - ".:/app"
