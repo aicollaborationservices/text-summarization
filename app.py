@@ -1,15 +1,15 @@
 import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 import yaml
 
 app = Flask(__name__)
 cors = CORS(app)
 
-model = T5ForConditionalGeneration.from_pretrained('t5-small')
-tokenizer = T5Tokenizer.from_pretrained('t5-small')
+model = AutoModelForSeq2SeqLM.from_pretrained('sshleifer/distilbart-cnn-12-6')
+tokenizer = AutoTokenizer.from_pretrained('sshleifer/distilbart-cnn-12-6')
 device = torch.device('cpu')
 
 
@@ -39,25 +39,18 @@ def info():
     })
 
 
-@app.route(API_V1 + '/predict', methods=['POST', 'OPTIONS'])
+@app.route(API_V1 + '/summarize', methods=['POST', 'OPTIONS'])
 @cross_origin(origin='localhost')
-def predict():
+def summarize():
     data = request.json
     
     preprocess_text = data['context'].strip().replace("\n","")
-    t5_prepared_Text = "summarize: "+ preprocess_text
+
     print ("original text preprocessed: \n", preprocess_text)
 
-    tokenized_text = tokenizer.encode(t5_prepared_Text, return_tensors="pt").to(device)
-    
-    summary_ids = model.generate(
-        tokenized_text,
-        num_beams=4,
-        no_repeat_ngram_size=2,
-        min_length=30,
-        max_length=100,
-        early_stopping=True
-    )
+    input = tokenizer.batch_encode_plus([preprocess_text], return_tensors='pt', max_length=1024)['input_ids'].to(device)
+
+    summary_ids = model.generate(input, num_beams=4, length_penalty=2.0, max_length=142, min_len=56, no_repeat_ngram_size=3, early_stopping=True)
 
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
