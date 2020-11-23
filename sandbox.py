@@ -5,6 +5,22 @@ model = T5ForConditionalGeneration.from_pretrained('t5-small')
 tokenizer = T5Tokenizer.from_pretrained('t5-small')
 device = torch.device('cpu')
 
+
+
+
+ids = model.generate(
+    tokenizer.encode("translate English to German: That is good.", return_tensorw="pt").to(device),
+    num_beams=4,
+    no_repeat_ngram_size=2,
+    min_length=30,
+    max_length=100,
+    early_stopping=True
+)
+translated = tokenizer.decode(ids[0], skip_special_tokens=True)
+
+print(translated)
+
+'''
 text ="""
 The US has "passed the peak" on new coronavirus cases, President Donald Trump said and predicted that some states would reopen this month.
 The US has over 637,000 confirmed Covid-19 cases and over 30,826 deaths, the highest for any country in the world.
@@ -31,3 +47,4 @@ summary_ids = model.generate(
 summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 print(summary)
+'''

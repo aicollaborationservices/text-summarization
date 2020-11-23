@@ -6,7 +6,7 @@ metadata:
   labels:
     service: text-summarization
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: text-summarization
   ports:
