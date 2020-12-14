@@ -50,7 +50,7 @@ def predict():
 
     input = tokenizer.batch_encode_plus([preprocess_text], return_tensors='pt', max_length=1024)['input_ids'].to(device)
 
-    summary_ids = model.generate(input, num_beams=4, length_penalty=2.0, max_length=142, min_len=56, no_repeat_ngram_size=3, early_stopping=True)
+    summary_ids = model.generate(input, num_beams=4, length_penalty=2.0, max_length=142, no_repeat_ngram_size=3, early_stopping=True)
 
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
