@@ -17,7 +17,7 @@ build:
   script:
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" docker.io
     - docker build --cache-from "5elementsofai/$CI_PROJECT_TITLE:latest" --tag "5elementsofai/$CI_PROJECT_TITLE:latest" --tag "5elementsofai/$CI_PROJECT_TITLE:$CI_COMMIT_SHA" .
-    - docker push "5elementsofai/$CI_PROJECT_TITLE:$CI_COMMIT_SHA"
+    - docker push "5elementsofai/$CI_PROJECT_TITLE:latest"
 
 deploy-kubernetes:
   image: alpine/k8s:1.14.6
