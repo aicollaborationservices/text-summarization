@@ -5,6 +5,7 @@ services:
 
 stages:
   - build
+  - deploy
 
 before_script:
   - apk --update add git
