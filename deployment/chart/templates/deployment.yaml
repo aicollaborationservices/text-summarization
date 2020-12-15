@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text-summarization
+  labels:
+    app: text-summarization
+    app.kubernetes.io/component: text-summarization
+spec:
+  replicas: {{ .Values.text-summarization.replicaCount }}
+  selector:
+    matchLabels:
+      app: text-summarization
+  template:
+    metadata:
+      labels:
+        app: text-summarization
+    spec:
+      containers:
+        - name: text-summarization
+          image: {{ .Values.text-summarization.image }}
+          imagePullPolicy: Always
+          env:
+          - name: PYTHONUNBUFFERED
+            value: "0"
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "2048Mi"
+              cpu: "500m"
+      restartPolicy: Always

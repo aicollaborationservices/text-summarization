@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: text-summarization
+  labels:
+    service: text-summarization
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  selector:
+    app: text-summarization
+    app.kubernetes.io/name: text-summarization
+  ports:
+    - port: 5000
+      targetPort: 80

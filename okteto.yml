@@ -1,10 +1,8 @@
 name: text-summarization
 image: okteto/python:3
-command: bash
+command: ["bash"]
 sync:
 - .:/usr/src/app
 forward:
-- 8080:8080
-reverse:
-- 9000:9000
+- 80:5000
 persistentVolume: {}
