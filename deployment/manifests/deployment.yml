@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: 5elementsofai
   name: text-summarization
   labels:
     app: text-summarization
