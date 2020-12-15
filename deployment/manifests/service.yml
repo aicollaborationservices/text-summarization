@@ -4,6 +4,8 @@ metadata:
   name: text-summarization
   labels:
     service: text-summarization
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
 spec:
   type: ClusterIP
   selector:
