@@ -1,5 +1,5 @@
 deploy:
-  - okteto build -t okteto.dev/text-summarization:latest`
+  - okteto build -t okteto.dev/text-summarization:latest
   - kubectl apply -f deployment/manifests
 devs:
   - okteto.yml
