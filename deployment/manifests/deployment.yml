@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: text-summarization
-          image: 5elementsofai/text-summarization
+          image: 5elementsofai/text-summarization:latest
           imagePullPolicy: Always
           env:
           - name: PYTHONUNBUFFERED
