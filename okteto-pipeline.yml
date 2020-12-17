@@ -1,6 +1,5 @@
 deploy:
   - okteto build -t okteto.dev/text-summarization:${OKTETO_GIT_COMMIT}
   - kubectl apply -f deployment/manifests
-  - helm upgrade --install text-summarization chart --set tag=${OKTETO_GIT_COMMIT}
 devs:
   - okteto.yml
