@@ -45,12 +45,13 @@ def predict():
     data = request.json
     
     preprocess_text = data['context'].strip().replace("\n","")
+    config_max_length = data ['config']
 
     print ("original text preprocessed: \n", preprocess_text)
 
     input = tokenizer.batch_encode_plus([preprocess_text], return_tensors='pt', max_length=1024)['input_ids'].to(device)
 
-    summary_ids = model.generate(input, num_beams=4, length_penalty=2.0, max_length=142, no_repeat_ngram_size=3, early_stopping=True)
+    summary_ids = model.generate(input, num_beams=4, length_penalty=2.0, max_length=config_max_length, no_repeat_ngram_size=3, early_stopping=True)
 
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
