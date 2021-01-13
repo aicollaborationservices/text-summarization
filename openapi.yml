@@ -75,6 +75,11 @@ components:
         context:
           type: string
           description: The text you want to summarize
+      type: object
+      properties: config
+        context:
+          type:  maxlength_number
+          description: The length you want the summarization to be
     Output:
       type: object
       properties:
