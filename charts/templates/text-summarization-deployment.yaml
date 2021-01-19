@@ -2,11 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: text-summarization
-  labels:
-    app: text-summarization
-    app.kubernetes.io/component: text-summarization
 spec:
-  replicas: {{ .Values.text-summarization.replicaCount }}
+  replicas: {{ .Values.textsummarization.replicaCount }}
   selector:
     matchLabels:
       app: text-summarization
@@ -15,10 +12,13 @@ spec:
       labels:
         app: text-summarization
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: text-summarization
-          image: {{ .Values.text-summarization.image }}
-          imagePullPolicy: Always
+          image: "{{ .Values.textsummarization.image }}:{{ .Values.tag }}"
           env:
           - name: PYTHONUNBUFFERED
             value: "0"
@@ -26,6 +26,5 @@ spec:
             - containerPort: 5000
           resources:
             limits:
-              memory: "2048Mi"
-              cpu: "500m"
-      restartPolicy: Always
+              memory: "4096Mi"
+              cpu: "1"

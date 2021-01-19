@@ -10,25 +10,23 @@ stages:
 before_script:
   - apk --update add git
 
-build:
+build-backend:
   only:
     - master
   stage: build
   script:
     - docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" docker.io
-    - docker build --cache-from "5elementsofai/$CI_PROJECT_TITLE:latest" --tag "5elementsofai/$CI_PROJECT_TITLE:latest" --tag "5elementsofai/$CI_PROJECT_TITLE:$CI_COMMIT_SHA" .
-    - docker push "5elementsofai/$CI_PROJECT_TITLE:latest"
+    - docker build --cache-from "5elementsofai/text-summarization:latest" --tag "5elementsofai/text-summarization:latest" --tag "5elementsofai/text-summarization:$CI_COMMIT_SHA" .
+    - docker push "5elementsofai/text-summarization:$CI_COMMIT_SHA"
 
 deploy-kubernetes:
-  image: alpine/k8s:1.14.6
+  image: alpine/k8s:1.14.9
   only:
     - master
   stage: deploy
   script:
-    - kubectl config set-cluster "$K8S_CLUSTER_NAME" --server="$K8S_URL" --insecure-skip-tls-verify=true
-    - kubectl config set-credentials "$K8S_USER" --token="$K8S_TOKEN"
-    - kubectl config set-context "$K8S_CONTEXT" --cluster="$K8S_CLUSTER_NAME" --user="$K8S_USER"
-    - kubectl config use-context "$K8S_CONTEXT"
-    - sed -i "s/<VERSION>/${CI_COMMIT_SHA}/g" deployment/manifests/deployment.yml
-    - kubectl apply -f deployment/manifests/deployment.yml
-    - kubectl apply -f deployment/manifests/service.yml
+    - kubectl config set-cluster "$CLUSTER_NAME" --server="$URL" --insecure-skip-tls-verify=true
+    - kubectl config set-credentials "$USER" --token="$TOKEN"
+    - kubectl config set-context "$CONTEXT" --cluster="$CLUSTER_NAME" --user="$USER"
+    - kubectl config use-context "$CONTEXT"
+    - helm upgrade --install aiplatform-text-summarization charts -f charts/values.yaml --set tag=$CI_COMMIT_SHA
