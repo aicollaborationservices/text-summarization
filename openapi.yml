@@ -6,13 +6,13 @@ info:
 servers:
   - url: http://localhost:5080
 paths:
-  /ping:
+  /api/1.0/ping:
     get:
       operationId: ping
       responses:
         200:
           description: It will return a pong when everything if correct
-  /info:
+  /api/1.0/info:
     get:
       operationId: info
       responses:
@@ -22,7 +22,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Info"
-  /definition:
+  /api/1.0/definition:
     get:
       operationId: definition
       responses:
@@ -32,7 +32,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Definition"
-  /predict:
+  /api/1.0/predict:
     post:
       operationId: predict
       requestBody:
