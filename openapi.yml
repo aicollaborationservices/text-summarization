@@ -79,7 +79,7 @@ components:
           description: The configs you can submit
           properties: 
             max_length:
-              type: string
+              type: integer
               description: The length you want the summarization to be
     Output:
       type: object
