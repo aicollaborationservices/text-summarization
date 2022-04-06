@@ -5,7 +5,6 @@ info:
   description: It will use a pretrained bert
 servers:
   - url: http://localhost:5080
-  - url: https://api.5elements.ai/text-summarization/api/1.0
 paths:
   /ping:
     get:

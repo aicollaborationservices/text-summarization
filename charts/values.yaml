@@ -1,8 +1,0 @@
-tag: latest
-
-textsummarization:
-    replicaCount: 1
-    image: 5elementsofai/text-summarization
-
-imagePullSecrets:
-  - name: gitlab-auth

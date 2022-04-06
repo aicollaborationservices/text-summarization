@@ -1,5 +1,0 @@
-deploy:
-  - okteto build -t okteto.dev/text-summarization:${OKTETO_GIT_COMMIT}
-  - kubectl apply -f deployment/manifests
-devs:
-  - okteto.yml

@@ -45,8 +45,8 @@ def predict():
     data = request.json
     
     preprocess_text = data['context'].strip().replace("\n","")
-    config = data ['config']
-    config_max_length = config ['max_length']
+    config = data['config']
+    config_max_length = config['max_length']
 
     print ("original text preprocessed: \n", preprocess_text)
 

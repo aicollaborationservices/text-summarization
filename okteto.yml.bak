@@ -1,8 +1,0 @@
-name: text-summarization
-image: okteto/python:3
-command: ["bash"]
-sync:
-- .:/usr/src/app
-forward:
-- 5000:5000
-persistentVolume: {}

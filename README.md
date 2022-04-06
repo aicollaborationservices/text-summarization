@@ -1,4 +1,4 @@
-# Micro model service for questions answering
+# Micro model service for text summarization
 
 ## Components
 
