@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: It will use a pretrained bert
 servers:
-  - url: http://localhost:5080
+  - url: http://localhost:5000
 paths:
   /api/1.0/ping:
     get:
