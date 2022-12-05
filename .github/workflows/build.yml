@@ -49,16 +49,21 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Get tag name
+        id: tagName
         uses: olegtarasov/get-tag@v2
           
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+      - name: Set up kubectl
+        uses: matootie/dokube@v1.4.0
         with:
-         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          clusterName: k8s-1-24-4-do-0-fra1-1669239908785
+
+      - name: Get nodes
+        run: kubectl get nodes
 
       - name: k8s deployment
         run: |
-         helm upgrade --install aiplatform-frontend charts -f charts/values.yaml --set tag=${{ github.sha }}
+         helm upgrade --install aiplatform-frontend charts -f charts/values.yaml --set tag=${{ steps.tagName.outputs.tag }}
          helm list
          
        
