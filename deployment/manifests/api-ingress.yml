@@ -17,5 +17,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: <repo>
-          servicePort: 5000
+          service:
+            name: <repo>
+            port:
+              number: 5000
