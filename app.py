@@ -40,13 +40,14 @@ def info():
 
 
 @app.route(API_V1 + '/predict', methods=['POST', 'OPTIONS'])
-@cross_origin(origin='localhost')
+@cross_origin()
 def predict():
     data = request.json
     
     preprocess_text = data['context'].strip().replace("\n","")
-    config = data['config']
-    config_max_length = config['max_length']
+    #config = data['config']
+    #config_max_length = config['max_length']
+    config_max_length = 1024
 
     print ("original text preprocessed: \n", preprocess_text)
 
@@ -56,8 +57,12 @@ def predict():
 
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
-    return jsonify({ 'summary': summary })
+
+    response = jsonify({ 'summary': summary })
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
    
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
