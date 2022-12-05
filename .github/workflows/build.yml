@@ -67,6 +67,9 @@ jobs:
           sed -i "s/<REPO>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/service.yml
           sed -i "s/<VERSION>/${{ steps.tagName.outputs.tag }}/g" deployment/manifests/deployment.yml
 
+      - name: Debug
+        run: cat deployment/manifests/deployment.yml
+
       - name: k8s deployment
         run: |
            kubectl apply -f deployment/manifests/api-ingress.yml
