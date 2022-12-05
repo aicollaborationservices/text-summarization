@@ -57,6 +57,21 @@ jobs:
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           clusterName: k8s-1-24-4-do-0-fra1-1669239908785
+        
+      - name: Shell
+        run: |
+          pwd
+          ls -ltr
+          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/api-ingress.yml
+          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/deployment.yml
+          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/service.yml
+          sed -i "s/<VERSION>/${{ steps.tagName.outputs.tag }}/g" deployment/manifests/deployment.yml
+
+      - name: k8s deployment
+        run: |
+           kubectl apply -f deployment/manifests/api-ingress.yml
+           kubectl apply -f deployment/manifests/deployment.yml
+           kubectl apply -f deployment/manifests/service.yml
 
       - name: Get nodes
         run: kubectl get nodes
