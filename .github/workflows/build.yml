@@ -55,7 +55,7 @@ jobs:
       - name: Set up kubectl
         uses: matootie/dokube@v1.4.0
         with:
-          personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           clusterName: k8s-1-24-4-do-0-fra1-1669239908785
 
       - name: Get nodes
