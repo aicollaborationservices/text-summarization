@@ -63,7 +63,7 @@ jobs:
 
       - name: k8s deployment
         run: |
-         helm upgrade --install aiplatform-frontend charts -f charts/values.yaml --set tag=${{ steps.tagName.outputs.tag }}
+         helm install aiplatform-frontend ./charts -f charts/values.yaml --set tag=${{ steps.tagName.outputs.tag }}
          helm list
          
        
