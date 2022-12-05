@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: <repo>-aicollaboration.io
+  name: <REPO>-aicollaboration.io
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt
@@ -13,13 +13,13 @@ spec:
         - aiproduct.io
       secretName: tls-latest-aiproduct.io
   rules:
-    - host: <repo>.aiproduct.io
+    - host: <REPO>.aiproduct.io
       http:
         paths:
           - path: /
             pathType: ImplementationSpecific
             backend:
               service:
-                name: <repo>
+                name: <REPO>
                 port:
                   number: 5000

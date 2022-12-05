@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: <repo>
+  name: <REPO>
 spec:
   type: ClusterIP
   ports:
     - name: http
       port: 5000
   selector:
-    app: <repo>
+    app: <REPO>

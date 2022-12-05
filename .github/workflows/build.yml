@@ -62,9 +62,9 @@ jobs:
         run: |
           pwd
           ls -ltr
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/api-ingress.yml
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/deployment.yml
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/service.yml
+          sed -i "s/<REPO>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/api-ingress.yml
+          sed -i "s/<REPO>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/deployment.yml
+          sed -i "s/<REPO>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/service.yml
           sed -i "s/<VERSION>/${{ steps.tagName.outputs.tag }}/g" deployment/manifests/deployment.yml
 
       - name: k8s deployment
