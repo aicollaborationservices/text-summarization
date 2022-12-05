@@ -47,24 +47,18 @@ jobs:
      steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Shell
-        run: |
-          pwd
-          ls -ltr
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/api-ingress.yml
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/deployment.yml
-          sed -i "s/<repo>/${GITHUB_REPOSITORY#*/}/g" deployment/manifests/service.yml
-          sed -i "s/<VERSION>/${{ github.sha }}/g" deployment/manifests/deployment.yml
-         
-      - name: Set kubernetes secrets
-        uses: azure/k8s-set-context@v2
+        
+      - name: Get tag name
+        uses: olegtarasov/get-tag@v2
+          
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
         with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
+         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: k8s deployment
         run: |
-           kubectl apply -f deployment/manifests/api-ingress.yml
-           kubectl apply -f deployment/manifests/deployment.yml
-           kubectl apply -f deployment/manifests/service.yml
+         helm upgrade --install aiplatform-frontend charts -f charts/values.yaml --set tag=${{ github.sha }}
+         helm list
+         
+       
