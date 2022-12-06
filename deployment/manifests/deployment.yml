@@ -23,8 +23,4 @@ spec:
               value: "0"
           ports:
             - containerPort: 5000
-          resources:
-            limits:
-              memory: 2048Mi
-              cpu: 500m
       restartPolicy: Always
