@@ -77,11 +77,4 @@ jobs:
            kubectl apply -f deployment/manifests/service.yml
 
       - name: Get nodes
-        run: kubectl get nodes
-
-      - name: k8s deployment
-        run: |
-         helm install aiplatform-frontend ./charts -f charts/values.yaml --set tag=${{ steps.tagName.outputs.tag }}
-         helm list
-         
-       
+        run: kubectl get all
