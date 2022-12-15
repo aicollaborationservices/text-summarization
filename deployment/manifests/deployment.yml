@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <REPO>
+  name: text-summarization
   labels:
-    app: <REPO>
+    app: text-summarization
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: <REPO>
+      app: text-summarization
   template:
     metadata:
       labels:
-        app: <REPO>
+        app: text-summarization
     spec:
       containers:
-        - name: <REPO>
-          image: "aicollaboration/<REPO>:latest"
+        - name: text-summarization
+          image: "aicollaboration/text-summarization:latest"
           imagePullPolicy: Always
           env:
             - name: PYTHONUNBUFFERED
