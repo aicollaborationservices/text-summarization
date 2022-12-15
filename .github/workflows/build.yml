@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -25,39 +25,38 @@ jobs:
         run: |
           git config user.name "${{ github.repository_owner }}"
           git config user.email "${{ github.repository_owner }}@users.noreply.github.com"
-      
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
           username: aipioneers
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: aicollaboration/text-summarization:latest
-    
 
   deploy:
-     runs-on: ubuntu-latest
-     needs: [build]
-    
-     steps:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Get tag name
         id: tagName
         uses: olegtarasov/get-tag@v2
-          
+
       - name: Set up kubectl
         uses: matootie/dokube@v1.4.0
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          clusterName: k8s-1-24-4-do-0-fra1-1669239908785
-        
+          clusterName: k8s-do-sfo3-aicollab
+
       - name: Shell
         run: |
           pwd
@@ -72,9 +71,9 @@ jobs:
 
       - name: k8s deployment
         run: |
-           kubectl apply -f deployment/manifests/api-ingress.yml
-           kubectl apply -f deployment/manifests/deployment.yml
-           kubectl apply -f deployment/manifests/service.yml
+          kubectl apply -f deployment/manifests/api-ingress.yml
+          kubectl apply -f deployment/manifests/deployment.yml
+          kubectl apply -f deployment/manifests/service.yml
 
       - name: Get nodes
         run: kubectl get all
